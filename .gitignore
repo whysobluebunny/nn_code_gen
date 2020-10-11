@@ -1,0 +1,7 @@
+/.idea/
+/venv/
+/generated/data
+/generated/generated.h5
+/generated/model.json
+/generated/__pycache__/
+/__pycache__/
