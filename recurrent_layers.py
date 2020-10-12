@@ -2,6 +2,7 @@ from layer import Layer
 from kb_support import KernelBiasSupport
 
 
+# Abstract base class for recurrent layers.
 class Recurrent(Layer, KernelBiasSupport):
     def __init__(self, units, activation, recurrent_activation,
                  use_bias, kernel_initializer, recurrent_initializer,
@@ -97,6 +98,7 @@ class LSTM(Recurrent):
         self.name = 'LSTM'
 
 
+# Gated Recurrent Unit
 # units, activation='tanh', recurrent_activation='sigmoid', use_bias=True, kernel_initializer='glorot_uniform',
 # recurrent_initializer='orthogonal', bias_initializer='zeros', kernel_regularizer=None, recurrent_regularizer=None,
 # bias_regularizer=None, activity_regularizer=None, kernel_constraint=None, recurrent_constraint=None, bias_constraint=None,

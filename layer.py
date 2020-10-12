@@ -1,3 +1,5 @@
+# Main Layer class which is an ancestor of others
+
 class Layer:
     def __init__(self):
         self.name = None
@@ -11,6 +13,7 @@ class Layer:
     def wrap(self, st):
         return f'\'{st}\''
 
+    # Converts layer parameter list to the script which is going to be used to construct a model
     def build_str(self):
         str_r = f'keras.layers.{self.name}( '
         for a in self.__dict__.items():

@@ -1,6 +1,14 @@
 from layer import Layer
 
 
+# Pooling layers are used to reduce the dimensions of the feature maps.
+
+# pool_size: Integer, size of the max pooling window.
+# strides: Integer, or None. Specifies how much the pooling window moves for each pooling step.
+# padding: One of "valid" or "same" (case-insensitive). "valid" means no padding.
+# "same" results in padding evenly to the left/right or up/down of the input such that output has the
+# same height/width dimension as the input.
+# data_format: A string, one of channels_last (default) or channels_first.
 class Pooling(Layer):
     def __init__(self, pool_size=None, strides=None, padding='valid', data_format='channels_last'):
         Layer.__init__(self)

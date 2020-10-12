@@ -9,10 +9,12 @@ except ImportError:
     from argparse import Namespace
 
 
+# Custom exception
 class InvalidNNModelException(Exception):
     pass
 
 
+# converts the whole model into script according to the template
 def build(model):
     t_script = 'from tensorflow import keras\nimport jsonpickle\n\n\nif __name__ == \"__main__\":\n\twith open(\'generated\\\\data\', \'r\') as f:\n\t\tjShapedData = f.read()\n\tshaped_data = jsonpickle.decode(jShapedData)\n'
     for line in model.build_body():
@@ -20,6 +22,7 @@ def build(model):
     return t_script
 
 
+# creates the script
 def create_training_file(model):
     script = build(model)
     with open('generated\\training.py', 'w+') as f:
@@ -33,12 +36,14 @@ def create_training_file(model):
         raise InvalidNNModelException("Model has been created with mistakes, file doesn't compile properly. " + str(e))
 
 
+# loads json model from a file
 def load_json_model(path):
     with open(path, "r") as f:
         model = jsonpickle.decode(f.read())
     return model
 
 
+# executes training of the NN
 def exec_training_file():
     try:
         result = os.system('python generated//training.py')
@@ -51,6 +56,7 @@ def exec_training_file():
         print(" NN didn't train successfully. There must be mistakes in the model.")
 
 
+# loads model and converts it into script
 def load_and_create():
     jmodel = None
     while jmodel is None:
@@ -66,21 +72,23 @@ def load_and_create():
         print(str(e))
 
 
+# creates script and executes training
 def load_and_train():
     load_and_create()
     exec_training_file()
 
 
+# shows options
 def show_menu():
     print('NN Code Generator\n=======================\n')
     print('Choose what to do:')
-    print('\t0) use trained NN')
     print('\t1) load model from json and generate code')
     print('\t2) run generated code and train model')
     print('\t3) load json model and run generated code, training the model (both previous options together)')
     print('\t4) exit')
 
 
+# used to interact with the menu
 def exec_menu():
     choice = 0
     while choice == 0:
@@ -106,5 +114,3 @@ def exec_menu():
 if __name__ == '__main__':
     show_menu()
     exec_menu()
-
-# TODO добавить методы для вывода статистики по тренировке evaluate() например

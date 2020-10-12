@@ -1,6 +1,16 @@
 from layer import Layer
 
 
+# Turns positive integers (indexes) into dense vectors of fixed size.
+
+# input_dim: Integer. Size of the vocabulary, i.e. maximum integer index + 1.
+# output_dim: Integer. Dimension of the dense embedding.
+# embeddings_initializer: Initializer for the embeddings matrix (see keras.initializers).
+# embeddings_regularizer: Regularizer function applied to the embeddings matrix (see keras.regularizers).
+# embeddings_constraint: Constraint function applied to the embeddings matrix (see keras.constraints).
+# mask_zero: Boolean, whether or not the input value 0 is a special "padding" value that should be masked out.
+# input_length: Length of input sequences, when it is constant.
+
 # keras.layers.Embedding(input_dim, output_dim, embeddings_initializer='uniform',
 # embeddings_regularizer=None, activity_regularizer=None, embeddings_constraint=None,
 # mask_zero=False, input_length=None)

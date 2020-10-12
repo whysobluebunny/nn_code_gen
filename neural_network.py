@@ -1,21 +1,25 @@
 import core_layers
 
 
+# Wraps the string according to the needed format
 def wrap(st):
     return f'\'{st}\''
 
 
+# Custom type of exception
 class NNException(Exception):
     def __init__(self, expression, message):
         self.expression = expression
         self.message = message
 
 
+# An optimizer is one of the two arguments required for compiling a Keras model
 class Optimizer:
     def __init__(self, name, learning_rate):
         self.learning_rate = learning_rate
         self.name = name
 
+    # converts optimizer parameters to the script
     def build_str(self):
         str_r = f'keras.optimizers.{self.name}( '
         for a in self.__dict__.items():
@@ -29,6 +33,7 @@ class Optimizer:
         return self.build_str()
 
 
+# Gradient descent (with momentum) optimizer.
 class SGD(Optimizer):
     def __init__(self, learning_rate=0.01, momentum=0.0, nesterov=False):
         Optimizer.__init__(self, "SGD", learning_rate)
@@ -36,6 +41,7 @@ class SGD(Optimizer):
         self.nesterov = nesterov
 
 
+# Optimizer that implements the Adam algorithm.
 class Adam(Optimizer):
     def __init__(self, learning_rate=0.02, beta_1=0.9, beta_2=0.99, epsilon=1e-07):
         Optimizer.__init__(self, "Adam", learning_rate)
@@ -44,6 +50,7 @@ class Adam(Optimizer):
         self.epsilon = epsilon
 
 
+# Optimizer that implements the RMSprop algorithm.
 class RMSprop(Optimizer):
     def __init__(self, learning_rate=0.001, rho=0.9, momentum=0.0, centered=False):
         Optimizer.__init__(self, "RMSprop", learning_rate)
@@ -52,11 +59,13 @@ class RMSprop(Optimizer):
         self.centered = centered
 
 
+# Compilation parameters
 class CompileParams:
     def __init__(self, optimizer='adam', loss='mean_squared_error'):
         self.optimizer = optimizer
         self.loss = loss
 
+    # converts compiling parameters into script
     def build_str(self):
         str_r = ' '
         for a in self.__dict__.items():
@@ -70,7 +79,7 @@ class CompileParams:
         return self.build_str()
 
 
-# x=None, y=None
+# Fitting parameters
 class FitParams:
     def __init__(self, object=None,
                  batch_size=32, epochs=200,
@@ -80,8 +89,6 @@ class FitParams:
                  initial_epoch=None, steps_per_epoch=None, validation_steps=None):
         self.DEFAULT_VALUES = (32, 200)
         self.object = object
-        # self.x = x
-        # self.y = y
         self.batch_size = batch_size
         self.epochs = epochs
         self.verbose = verbose
@@ -158,7 +165,6 @@ class FitParams:
 
 class NeuralNetwork:
     def __init__(self, layers=[], compile_params=None, fit_params=None):
-        # TODO дефолтные параметры для тренировки и компиляции
         self.layers = layers
         self.compile_params = compile_params
         self.fit_params = fit_params

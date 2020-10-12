@@ -1,3 +1,4 @@
+# processed data to use in the script
 class ShapedData:
     def __init__(self, x_training, y_training, x_test=None, y_test=None):
         self.x_training = x_training
